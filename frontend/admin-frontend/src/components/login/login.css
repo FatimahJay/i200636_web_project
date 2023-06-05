@@ -1,0 +1,34 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@700&display=swap');
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+h1 {font-family: 'Alegreya Sans SC', sans-serif;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust the value as needed */
+  }
+  
+  .logo {
+    width: 50px; /* Adjust the width and height to fit your logo */
+    height: 50px;
+    margin-right: 20px; /* Adjust the value as needed */
+  }
+
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url('../6859183.jpg');
+  background-size: cover;
+  background-position: center center;
+  outline-offset: black 20px;
+}
