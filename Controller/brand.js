@@ -84,7 +84,61 @@ const brandController = {
       console.error(error); 
       res.status(500).send({ error: 'Error fetching brands.' });
     }
+  },
+
+// delete a brand
+async deleteBrand(req, res) {
+  try {
+    const brandId = req.params.id;
+    const sellerId = req.user._id;
+    const userRole = req.user.role;
+
+    if (userRole === 'admin') {
+      // If user is an admin, delete the brand without checking the seller
+      const brand = await Brand.findOneAndDelete({ _id: brandId });
+
+      if (!brand) {
+        return res.status(404).send({ error: 'Brand not found.' });
+      }
+
+      res.status(200).send(brand);
+    } else if (userRole === 'seller') {
+      // If user is a seller, delete the brand only if it belongs to the seller
+      const brand = await Brand.findOneAndDelete({ _id: brandId, seller: sellerId });
+
+      if (!brand) {
+        return res.status(404).send({ error: 'Brand not found.' });
+      }
+
+      res.status(200).send(brand);
+    } else {
+      // If user is neither admin nor seller, they don't have permission to delete the brand
+      return res.status(403).send({ error: 'You are not authorized to delete this brand.' });
+    }
+  } catch (error) {
+    res.status(500).send({ error: 'Error deleting brand.' });
   }
+},
+
+// view all brands
+async getAllbrands(req, res) {
+  try {
+    const userRole = req.user.role;
+
+    if (userRole === 'admin') {
+      // If user is an admin, fetch all brands
+      const brands = await Brand.find({});
+      res.status(200).send(brands);
+    } else {
+      // If user is not an admin, they don't have permission to view all brands
+      return res.status(403).send({ error: 'You are not authorized to view all brands.' });
+    }
+  } catch (error) {
+    res.status(500).send({ error: 'Error fetching brands.' });
+  }
+}
+
+
 
 }
 
