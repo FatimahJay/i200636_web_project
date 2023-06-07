@@ -46,9 +46,23 @@ function AdminDashboard() {
     fetchUsers();
   };
 
-  const handleDelete = (userId) => {
-    // Handle the delete action for the specific user
-    console.log("Delete user:", userId);
+  const handleDelete = async (userId) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Please authenticate.");
+        return;
+      }
+
+      await axios.delete(`http://localhost:5000/user/api/delete/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      alert("User deleted successfully.");
+      fetchUsers();
+    } catch (error) {
+      console.error("Error while deleting user: ", error);
+    }
   };
 
   const logout = () => {

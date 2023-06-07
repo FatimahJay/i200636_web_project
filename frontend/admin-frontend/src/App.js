@@ -6,6 +6,7 @@ import Homepage from './components/homepage/homepage';
 import EditProfile from './components/editprofile/editprofile';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AdminDashboard from './components/admindashboard/admindashboard'
+import ViewBrand from './components/manageBrand/managebrand'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/editprofile/:userId" element={<EditProfile />} />
         <Route path="/admindashboard" element={<AdminDashboard />} />
+        {/* <Route path="/viewbrand" element={<ViewBrand />} /> */}
       </Routes>
     </Router>
   );

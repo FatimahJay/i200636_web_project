@@ -31,6 +31,8 @@ function EditProfile({ usertoedit, setSelectedUser, handleCloseModal }) {
     setUser((prevState) => ({ ...prevState, [name]: value }));
   };
 
+
+
   const editUser = async (e) => {
     e.preventDefault();
     if (!user.name || !user.email) {
