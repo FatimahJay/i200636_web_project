@@ -32,3 +32,8 @@ h1 {font-family: 'Alegreya Sans SC', sans-serif;
   background-position: center center;
   outline-offset: black 20px;
 }
+
+.form-group {
+  margin: 0;
+  margin-bottom: 30px;
+}

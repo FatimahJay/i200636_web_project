@@ -16,27 +16,79 @@ function Register() {
     role: "customer", // set a default value for role
   });
 
+
+  const [errors, setErrors] = useState({
+    name: false,
+    email: false,
+    password: false,
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({
       ...user,
       [name]: value,   //whatever atrr you wanted to change will be referred to as 'name' and value will be its updated value
     });
+
+    setErrors((prevErrors) => ({    //rmv err when user starts typing
+      ...prevErrors,
+      [name]: false,
+    }));
+
   };
 
+
+  const validateForm = () => {
+    let isValid = true;
+    const updatedErrors = { ...errors };
+  
+    // Validate name
+    if (!/^[A-Za-z]+$/.test(user.name)) {  //expression /^[A-Za-z]+$/ is used to match only alphabets in the name field. If the name field  contains any non-alphabetic characters, it will be considered invalid
+      updatedErrors.name = true;
+      isValid = false;
+    } else {
+      updatedErrors.name = false;
+    }
+  
+    // Validate email
+    if (!user.email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+      updatedErrors.email = true;
+      isValid = false;
+    } else {
+      updatedErrors.email = false;
+    }
+  
+    // Validate password
+    if (user.password.length < 6) {
+      updatedErrors.password = true;
+      isValid = false;
+    } else {
+      updatedErrors.password = false;
+    }
+  
+    setErrors(updatedErrors);
+    return isValid;
+  };
+  
+
+
   const register = () => {
-    const { name, email, password, role } = user;  //destructure user obj values into individual vars
-    if (name && email && password && role) {  //if all present
+    if (validateForm()) {
       axios
         .post("http://localhost:5000/user/api/register", user)
         .then((res) => {
-          alert(res.data.message); 
-          navigate("/login");  //a way to programmatically change the URL of the browser and navigate to a different page
+          alert(res.data.message);
+          navigate("/login");
+        })
+        .catch((error) => {
+          console.error("Error while registering user:", error);
+          alert("An error occurred during registration. Please try again.");
         });
     } else {
-      alert("Enter all fields!");
+      alert("Please enter valid input in all fields.");
     }
   };
+  
 
   return (
     <div className="container-fluid">
@@ -62,26 +114,28 @@ function Register() {
                         placeholder="Name"
                         required
                         autoFocus
-                        className="form-control"
+                        className={`form-control ${errors.name ? "is-invalid" : ""}`}
                         value={user.name}
                         onChange={handleChange}
                         name="name"
                       />
-                      <br></br>
+                      {errors.name && <div className="invalid-feedback">Please enter a valid name</div>}
+                      {/* <br></br> */}
                     </div>
-                    <div className="form-group ">
+                    <div className="form-group">
                       <input
                         id="inputEmail"
                         type="email"
                         placeholder="Email address"
                         required
                         autoFocus
-                        className="form-control"
+                        className={`form-control ${errors.email ? "is-invalid" : ""}`}
                         value={user.email}
                         onChange={handleChange}
                         name="email"
                       />
-                      <br></br>
+                      {errors.email && <div className="invalid-feedback">Please enter a valid email address.</div>}
+                      {/* <br></br> */}
                     </div>
                     <div className="form-group">
                       <input
@@ -89,14 +143,15 @@ function Register() {
                         type="password"
                         placeholder="Password"
                         required
-                        className="form-control form-control-md"
+                        className={`form-control form-control-md ${errors.password ? "is-invalid" : ""}`}
                         value={user.password}
                         onChange={handleChange}
                         name="password"
                       />
-                      <br></br>
+                      {errors.password && <div className="invalid-feedback">Please enter a password with at least 6 characters.</div>}
+                      {/* <br></br> */}
                     </div>
-                    <div className="form-group">
+                    <div className="form-group" style={{marginBottom:"5px"}}>
                       <select
                         id="inputRole"
                         className="form-control"

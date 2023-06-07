@@ -8,27 +8,61 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
   const [user, setUser] = useState({
-     email: "",
-     password: "" 
-    });
+    email: "",
+    password: ""
+  });
+
+  const [errors, setErrors] = useState({
+    email: false,
+    password: false
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser((prevState) => ({ ...prevState, [name]: value }));  //The function form of setUser will ensure that the state is updated based on the latest state value. 
+    setUser((prevState) => ({ ...prevState, [name]: value }));
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: false }));
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    const updatedErrors = { ...errors };
+
+    // Validate email
+    if (!user.email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+      updatedErrors.email = true;
+      isValid = false;
+    } else {
+      updatedErrors.email = false;
+    }
+
+    // Validate password
+    if (user.password === "") {
+      updatedErrors.password = true;
+      isValid = false;
+    } else {
+      updatedErrors.password = false;
+    }
+
+    setErrors(updatedErrors);
+    return isValid;
   };
 
   const login = async () => {
-    const { email, password } = user; //destructuring
-    if (email && password) {
+    if (validateForm()) {
+      const { email, password } = user;
       try {
-        const response = await axios.post("http://localhost:5000/user/api/login", user);
+        const response = await axios.post("http://localhost:5000/user/api/login", {
+          email,
+          password
+        });
         localStorage.setItem("token", response.data.token);
         navigate("/");
       } catch (error) {
         console.error("Error while logging in: ", error);
+        alert("An error occurred while logging in. Wrong email or password. Please try again.");
       }
     } else {
-      alert("Please enter email and password!");
+      alert("Please enter valid email and password.");
     }
   };
 
@@ -45,9 +79,9 @@ function Login() {
                     <img src={logo} alt="Logo" className="logo" />
                     <h1 className="ml-2">Global Marketplace</h1>
                   </div>
-                  <br></br>
+                  <br />
                   <h3>Login Form</h3>
-                  <br></br>
+                  <br />
                   <form>
                     <div className="form-group ">
                       <input
@@ -56,12 +90,14 @@ function Login() {
                         placeholder="Email address"
                         required
                         autoFocus
-                        className="form-control"
+                        className={`form-control ${errors.email ? "is-invalid" : ""}`}
                         value={user.email}
                         onChange={handleChange}
                         name="email"
                       />
-                      <br></br>
+                      {errors.email && (
+                        <div className="invalid-feedback">Please enter a valid email address.</div>
+                      )}
                     </div>
                     <div className="form-group">
                       <input
@@ -69,12 +105,14 @@ function Login() {
                         type="password"
                         placeholder="Password"
                         required
-                        className="form-control form-control-md"
+                        className={`form-control form-control-md ${errors.password ? "is-invalid" : ""}`}
                         value={user.password}
                         onChange={handleChange}
                         name="password"
                       />
-                      <br></br>
+                      {errors.password && (
+                        <div className="invalid-feedback">Please enter a password.</div>
+                      )}
                     </div>
                     <button
                       type="button"

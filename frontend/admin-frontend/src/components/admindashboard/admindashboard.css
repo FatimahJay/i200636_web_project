@@ -2,3 +2,65 @@
  {
     background-color:#e0eaf8 !important /*ensures it takes precedence over other styles*/
   }
+
+  
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@700&display=swap');
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+h1 {font-family: 'Alegreya Sans SC', sans-serif;
+}
+
+
+  .user-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .user-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    border-radius: var(--bs-card-border-radius);
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+    background-color: var(--bs-card-bg);
+    background-color: azure;
+  }
+
+
+
+  .user-card .card-body {
+    flex-grow: 1;
+  }
+  
+  .user-card .card-title {
+    margin-bottom: var(--bs-card-title-spacer-y);
+  }
+  
+  .user-card .card-text {
+    margin-bottom: var(--bs-card-title-spacer-y);
+  }
+  
+  .user-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--bs-card-title-spacer-y);
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust the value as needed */
+  }
+  
+  .logo {
+    width: 50px; /* Adjust the width and height to fit your logo */
+    height: 50px;
+    margin-right: 20px; /* Adjust the value as needed */
+  }

@@ -32,3 +32,16 @@ h1 {font-family: 'Alegreya Sans SC', sans-serif;
   background-position: center center;
   outline-offset: black 20px;
 }
+
+.invalid-feedback {
+  display: flex;
+  width: 100%;
+  margin-top: -20px;
+  font-size: .875em;
+  color: var(--bs-form-invalid-color);
+}
+
+.form-group{
+  margin: 0;
+  margin-bottom: 50px;
+}
