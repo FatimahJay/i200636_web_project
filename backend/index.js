@@ -29,9 +29,10 @@ app.use(express.urlencoded({ extended: false }));
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
+
 app.use(
-  createProxyMiddleware(['/register', '/login'], {
-    target: 'http://localhost:3000',  // Change to the address of your React development server
+  createProxyMiddleware(['/register', '/login', '/editprofile/:userId'], {
+    target: 'http://localhost:3000', 
     changeOrigin: true,
   })
 );

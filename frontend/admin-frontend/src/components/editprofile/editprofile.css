@@ -1,0 +1,57 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@700&display=swap');
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+h1 {font-family: 'Alegreya Sans SC', sans-serif;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust the value as needed */
+  }
+  
+
+.login
+{
+  min-height: 100vh;
+}
+
+.image
+{
+min-height: 40px;
+} 
+
+.bg-image4 {
+  background-image: url('../20943587.jpg');
+  background-size: cover;
+  background-position: center center;
+  outline-offset: black 20px;
+}
+
+.container-fluid {
+  height: 100%;
+}
+
+
+.logo {
+  width: 30px;
+  height: 30px;
+}
+
+.modal-dialog {
+  max-width: 1000px;
+  margin: 1.75rem auto;
+}
+
+.modal-content {
+  border-radius: 0;
+}
+
+.form-control {
+  border-radius: 0;
+}

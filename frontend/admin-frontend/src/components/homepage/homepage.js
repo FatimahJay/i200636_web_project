@@ -23,6 +23,13 @@ function Homepage() {
     navigate("/login");
   };
 
+  const isAdmin = () => {
+    if (user && user.role === "admin") {
+      return true;
+    }
+    return false;
+  };
+  
   return (
     <div className="container-fluid">
       <div className="row no-gutter">
@@ -47,6 +54,15 @@ function Homepage() {
                         <p>Role: {user.role}</p>
                       </div>
                     )}
+                      {isAdmin() && (
+                    <button 
+                      type="button"
+                      className="btn btn-outline-info btn-block text-uppercase mb-2  shadow-sm"
+                      onClick={() => navigate("/admindashboard")}
+                    >
+                      Admin Dashboard
+                    </button>
+                      )}
                     <button type="button" className="btn btn-dark" onClick={logout}>
                       Logout
                     </button>

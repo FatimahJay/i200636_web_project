@@ -1,0 +1,4 @@
+.table-striped tbody tr:nth-of-type(odd)
+ {
+    background-color:#e0eaf8 !important /*ensures it takes precedence over other styles*/
+  }
